@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Coding Events</title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
 
 <h1>All Events</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
-<p th:unless="${events} and ${events.size()}">No events!</p>
-<!-- unless this boolean statement evaluates to true, display no events-->
 
-<ul>
-    <th:block th:each="event : ${events}">
-        <li th:text="${event}"></li>
-    </th:block>
-</ul>
+<!--<p th:unless="${events} and ${events.size()}">No events!</p>
+ unless this boolean statement evaluates to true, display no events-->
+<table class="table table-striped">
+    <thead>
+        <tr>
+           <th>Name</th>
+        </tr>
+    </thead>
+    <tr th:each="event : ${events}">
+        <td th:text="${event}"></td>
+    </tr>
+</table>
+
 <!--for loop , th: block  is outer block,
     th:each specifies the set of things the loop will iterate over, this case a list of events
      then put a new li tag in font of the list of events to display each one-->
