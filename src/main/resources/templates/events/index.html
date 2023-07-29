@@ -1,27 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<!--<head th:replace="fragments :: head"></head> -->
+<head>
+    <meta charset="UTF-8/">
+    <title>Coding Events</title>
+    <link th:href="@{styles.css}" rel="stylesheet"/>
+</head>
 
-<body class="container">
-
+<!--<body class="container"> -->
+<body>
 
 <h1>All Events</h1>
 
-<nav th:replace="fragments :: navigation"></nav>
+<!--<nav th:replace="fragments :: navigation"></nav>-->
 
 <!--<p th:unless="${events} and ${events.size()}">No events!</p>
  unless this boolean statement evaluates to true, display no events-->
-<table class="table table-striped">
-    <thead>
-        <tr>
-           <th>Name</th>
-        </tr>
-    </thead>
-    <tr th:each="event : ${events}">
-        <td th:text="${event}"></td>
+<table class = "center">
+    <tr>
+        <th>Events Name</th>
+        <th>Description</th>
+        <th>Address</th>
     </tr>
-</table>
+    <th:block th:each="event : ${events}">
+        <tr>
+            <td th:text="${event.key}"></td>
+            <td th:text="${event.value}"></td>
+            <th:block th:if='${event.key.equals("Code Marvel")}'>
+                <td th:replace="fragments :: codeMarvelAddress"></td>
+            </th:block>
+            <th:block th:if='${event.key.equals("Mx Code")}'>
+                <td th:replace="fragments :: mxCodeAddress"></td>
+            </th:block>
+            <th:block th:if='${event.key.equals("Black in Tech")}'>
+                <td th:replace="fragments :: blackInTechAddress"></td>
+            </th:block>
 
+        </tr>
+    </th:block>
+
+
+   <!-- <th:block  th:each="event : ${events}">
+        <tr>
+            <td th:text="${event.key}"></td>
+            <td th:text="${event.value}"></td>
+        </tr>
+    </th:block> -->
+
+</table>
+<!--commented out b/c of exercise <tr th:each="event : ${events}">
+        <td th:text="${event}"></td>
+    </tr> -->
 <!--for loop , th: block  is outer block,
     th:each specifies the set of things the loop will iterate over, this case a list of events
      then put a new li tag in font of the list of events to display each one-->
