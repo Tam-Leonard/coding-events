@@ -64,4 +64,24 @@ public class EventController {
         }
         return "redirect:";
     }
+    @GetMapping("edit/{eventId}")//b/c we're displaying information 14.5. Exercises: Edit Model Classes
+    public String displayEditForm(Model model, @PathVariable int eventId) {
+        //eventId need to match for it to work
+        //EventData.getById(eventId);commented out b/c of task 5 b. it was added below no longer needed
+        Event event = EventData.getById(eventId); //task 8
+        String title = "Edit Event " + event.getName() + " (id=" + event.getId() + ")"; //Task 8
+        model.addAttribute("event", event );
+        model.addAttribute("title", title); //task 8
+        return "events/edit";
+    }
+    @PostMapping("edit")//b/c this is doing something after an event occurs hint: it reads process
+    public String processEditForm(int eventId, String name, String description) {
+        Event myEvent = EventData.getById(eventId);
+        //Task 9 a) by query it means go get the data from whoever is holding it, our data layer
+        //and save what it gets back into an event variable
+        // controller code will go here
+        myEvent.setName(name); //task 9 b
+        myEvent.setDescription(description); //task 9 b
+        return "redirect:/events"; //task 9 c
+    }
 }
