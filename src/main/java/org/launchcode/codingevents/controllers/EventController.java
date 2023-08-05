@@ -4,8 +4,10 @@ import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +32,17 @@ public class EventController {
    //eventName parameter comes from create.html
    public String displayCreateEventForm(Model model) {
        model.addAttribute("title","Create Event");
+       model.addAttribute(new Event());//added this to the events.java file then went to the create file
        return "events/create";
     }
     //lives at /event/create
     @PostMapping("create")
-    public String processCreateEventForm(@ModelAttribute Event newEvent) {
+    public String processCreateEventForm(@ModelAttribute @Valid Event newEvent,
+                                         Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title","Create Event");
+            return "events/create";
+        } //go to create.html and add code at the top after this step
         EventData.add(newEvent);
         return "redirect:";
         //when the Event newEvent is called, Spring will create the new event for us
