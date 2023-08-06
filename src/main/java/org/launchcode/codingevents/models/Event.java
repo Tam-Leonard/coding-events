@@ -1,9 +1,7 @@
 package org.launchcode.codingevents.models;
 
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 public class Event {
@@ -17,12 +15,29 @@ public class Event {
     @NotBlank(message = "Email is required.")
     @Email(message = "Nah! Try again.")
     private String contactEmail;
+    @NotNull(message = "Location is required.")
+    @NotBlank(message = "Location is required.")
+    private String location;
+
+    @AssertTrue(message="This event must have attendees register.")
+    private boolean shouldRegister = true;
+
+    @NotNull(message="At least 1 attendee is required.")
+    @Min(value=1, message = "At least 1 attendee is required.")
+    private Integer numOfAttendees;
+
+    @NotNull(message = "Number of Marvels attending between 1 and 4.")
+    @Min(value=1, message = "Number of Marvels attending between 1 and 4.")
+    @Max(value=4, message = "Number of Marvels attending between 1 and 4.")
+    private Integer numOfMarvels;
 
     //this is the constructor
-    public Event(String name, String description, String contactEmail) {
+    public Event(String name, String description, String contactEmail, String location, Integer numOfAttendees ) {
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.location = location;
+        this.numOfAttendees = numOfAttendees;
         this.id = nextID; //only use getter, no one should be able to set it
         nextID++; //don't want this to be exposed to the public. should stay private so no getter
     }
@@ -51,6 +66,22 @@ public class Event {
         this.contactEmail = contactEmail;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public boolean isShouldRegister() {
+        return shouldRegister;
+    }
+
+    public void setShouldRegister(boolean shouldRegister) {
+        this.shouldRegister = shouldRegister;
+    }
+
     public int getId() {
         return id;
     }
@@ -58,6 +89,22 @@ public class Event {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Integer getNumOfAttendees() {
+        return numOfAttendees;
+    }
+
+    public void setNumOfAttendees(Integer numOfAttendees) {
+        this.numOfAttendees = numOfAttendees;
+    }
+
+    public Integer getNumOfMarvels() {
+        return numOfMarvels;
+    }
+
+    public void setNumOfMarvels(Integer numOfMarvels) {
+        this.numOfMarvels = numOfMarvels;
     }
 
     @Override
