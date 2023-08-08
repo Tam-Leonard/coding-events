@@ -18,15 +18,24 @@ public class Event {
     @Email(message = "Nah! Try again.")
     private String contactEmail;
 
+    private EventType type; //added this variable then in the constructor then added getter/setter
+
     //this is the constructor
-    public Event(String name, String description, String contactEmail) {
+    public Event(String name, String description, String contactEmail, EventType type) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
-        this.id = nextID; //only use getter, no one should be able to set it
-        nextID++; //don't want this to be exposed to the public. should stay private so no getter
+        this.type = type;
+        //Line was cut b/c the disply for create event started at 0. want it to start at 1 so it was
+        //added down below then added this()
+        // this.id = nextID; //only use getter, no one should be able to set it
+        //nextID++; //don't want this to be exposed to the public. should stay private so no getter
     }
-    public Event(){}//this is a no arg constructor, a constructor that takes no arguments.
+    public Event(){
+        this.id = nextID;
+        nextID++;
+    }//this is a no arg constructor, a constructor that takes no arguments.
     public String getName() {
         return name;
     }
@@ -51,9 +60,18 @@ public class Event {
         this.contactEmail = contactEmail;
     }
 
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }
+
 
     @Override
     public String toString() {
